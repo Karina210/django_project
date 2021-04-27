@@ -1,0 +1,23 @@
+{% extends "layout/index.html" %}
+
+{% block title %} Feedback {% endblock%}
+{% block content %}
+<form action="{% url 'feedback_url' %}" method="POST">
+  {% csrf_token %}
+  name:
+  <input type="text" name="name">
+  <br>
+  last name:
+  <input type="text" name="lastname">
+  <br>
+  age:
+  <input type="number" name="age">
+  <br>
+  comment:
+  <textarea name="comment" cols="30" rows="10"></textarea>
+  <br>
+  <button type="submit">Send</button>
+</form>
+{% endblock%}
+
+{% include "" %}
