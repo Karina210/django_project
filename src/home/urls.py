@@ -11,5 +11,6 @@ urlpatterns = [
     path(r'com/', com),
     path(r'comm/', comm),
     path(r'index1', index1),
-    path(r'feedback/', feedback, name='feedback_url')
+    path(r'feedback/', feedback, name='feedback_url'),
+    path('customers', customers, name='customers_list_url')
 ]

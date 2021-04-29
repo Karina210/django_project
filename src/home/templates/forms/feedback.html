@@ -4,6 +4,7 @@
 
 {% block content %}
     <form method="POST" action={% url 'feedback_url' %}>
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Send</button>
     </form>

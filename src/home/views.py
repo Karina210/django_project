@@ -1,7 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
 from home.forms import FeedbackForm
+from home.models import Customer
 
 
 def index(request):
@@ -67,7 +68,17 @@ def feedback(request):
         form = FeedbackForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            print(f'{data.get("name")}|{data.get("lastname")}|{data.get("age")}')
+            customer = Customer(firstname=data.get("name"), lastname=data.get("lastname"), age=data.get("age"))
+            print(customer)
+            customer.save()
         else:
             print(f'Error validation! {form.errors}')
 
+    return redirect('customers_list_url')
+
+
+def customers(request):
+    list=Customer.objects.all()
+
+    context = {'customersList': list}
+    return render(request, "layout/customers.html", context)
