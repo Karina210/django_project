@@ -1,0 +1,11 @@
+{% extends "layout/index.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for customerItem in customersList %}
+            <li>{{ customerItem }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
