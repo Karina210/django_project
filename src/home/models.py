@@ -11,11 +11,4 @@ class Customer(models.Model):
         return f'name: {self.firstname} | lastname: {self.lastname} | age: {self.age}'
 
 
-class Tickets(models.Model):
-
-    name = models.CharField()
-    first_country = models.CharField()
-    last_country = models.CharField()
-    people = models.CharField()
-    data = models.CharField()
 

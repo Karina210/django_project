@@ -1,0 +1,16 @@
+{% extends "layout/index.html" %}
+
+{% block title %} Customer: {{ customer.id }} {% endblock %}
+
+{% block content %}
+    {% for i in new %}
+    <h1>About customer {{ i.firstname }}</h1>
+    <div>
+    <h3>Page about customer</h3>
+    <p>Firstname: {{ i.firstname }}</p>
+    <p>Lastname: {{ i.lastname }}</p>
+    <p>Age: {{ i.age }}</p>
+    </div>
+    <hr>
+    {% endfor %}
+{% endblock %}

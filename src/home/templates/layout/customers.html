@@ -5,7 +5,8 @@
 {% block content %}
     <ul>
         {% for customerItem in customersList %}
-            <li>{{ customerItem }}</li>
+            <li>{{ customerItem }} | <a href="{% url 'find_customer' customerItem %}">show</a> </li>
+            <a href ='{{ customerDetail }}'></a>
         {% endfor %}
     </ul>
 {% endblock %}

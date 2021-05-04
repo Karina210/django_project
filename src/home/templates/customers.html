@@ -1,0 +1,11 @@
+{% extends "layout/index.html" %}
+
+{% block title %} Customers {% endblock %}
+
+{% block content %}
+    <ul>
+        {% for customerItem in customersList %}
+            <li>{{ customerItem }} | <a href="{% url 'find_customer' customerItem.id %}">show</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

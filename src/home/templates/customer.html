@@ -1,0 +1,10 @@
+{% extends "layout/index.html" %}
+
+{% block title %} Customer: {{ customer.id }} {% endblock %}
+
+{% block content %}
+    <h3>Page about customer</h3>
+    <p>Firstname: {{ customer.firstname }}</p>
+    <p>Lastname: {{ customer.lastname }}</p>
+    <p>Age: {{ customer.age }}</p>
+{% endblock %}
