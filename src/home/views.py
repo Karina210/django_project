@@ -1,9 +1,16 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound, Http404, JsonResponse
 from django.shortcuts import render, redirect, resolve_url
 from django.template import loader
+
 # from home.forms import FeedbackForm
 from home.forms import CustomerForm
-from home.models import Customer
+from home.models import *
+from .serializers import ProductSerializer
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 def index(request):
@@ -148,6 +155,78 @@ def update(request, customer_id):
         pass
     else:
         raise Exception('Method not allowed')
+
+
+def students_by_group(request, group_id):
+    group = Group.objects.get(id=group_id)
+    students = group.students.all()
+    return HttpResponse(students)
+
+
+@api_view(['GET'])
+def api_comments(request):
+    if request.method == "GET":
+        comments = Product.objects.filter()
+        serializer = ProductSerializer(comments, many=True)
+        return Response(serializer.data)
+
+
+def product_list(request):
+    products = Product.objects.all()
+
+    serializer = ProductSerializer(products, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+def product_name(request, product_id):
+    product = Product.objects.get(id = product_id)
+
+    serializer = ProductSerializer(product, many=False)
+    return JsonResponse(serializer.data, safe=False)
+
+
+def create_product(request):
+    serializer = ProductSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class APIProducts(APIView):
+    def get(self, request):
+        product = Product.objects.filter()
+        serializer = ProductSerializer(product, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class APIProductsdetail(APIProducts):
+    def get(self, request, pk):
+        comment = Product.objects.get(pk=pk)
+        serializer = ProductSerializer(comment)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        comment = Product.objects.get(pk=pk)
+        serializer = ProductSerializer(comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        comment = Product.objects.get(pk=pk)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 

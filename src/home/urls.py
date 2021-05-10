@@ -1,4 +1,7 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .product_controller import ProductViewSet
+from .homework import *
 
 from home.views import *
 
@@ -23,5 +26,26 @@ urlpatterns = [
 
     path('customer/<int:customer_id>/update', update, name='update_customer'),
 
-    path('new', new)
+    path('new', new),
+
+    path('group/<int:group_id>/students', students_by_group, name='students_by_group'),
+    path('products', product_list, name='product_list'),
+    path('product_name/<int:product_id>', product_name, name='product_name'),
+    path('product/create', create_product, name='create_product'),
+    path('productss', APIProducts.as_view()),
+    path('productss/<int:pk>', APIProductsdetail.as_view()),
+    path('projects', projects),
+    path('project/<int:project_id>', project),
+    path('comments/', api_comments),
+    path('api_comment_detail/<int:pk>', api_comment_detail),
+    path('projectss', APIProject.as_view()),
+    path('projectss/<int:pk>', APIProjectDetail.as_view()),
+    path('proj', api_projects)
 ]
+#
+# router = DefaultRouter()
+# router.register(r'products', ProductViewSet, basename='product')
+#
+# urlpatterns = [
+#     path('api/', include(router.urls))
+# ]
